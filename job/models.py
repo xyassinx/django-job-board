@@ -7,6 +7,9 @@ JOB_TYPE = (
         ('Part Time', 'Part Time'),
         
     )
+
+
+
 # Create your models here.
 class Job(models.Model):
     title = models.CharField(max_length=100)
@@ -19,8 +22,14 @@ class Job(models.Model):
     salary = models.IntegerField(default=0)
     experience = models.IntegerField(default=1)
     Category = models.ForeignKey('Category', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='jobs/')
+    
     def __str__(self):
         return self.title
+    
+def image_upload(instance, filename):
+    imagename , extension = filename.split(".")
+    return "jobs/%s.%s" %(instance.id,  extension)
 
 class Category(models.Model):
     name = models.CharField(max_length=25)
